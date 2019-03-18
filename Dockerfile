@@ -1,4 +1,4 @@
-FROM       felixkazuyade/baseimage
+FROM       felixkazuyadev/base-image
 MAINTAINER Felix Kazyua
 
 # Umgebungsvariablen
@@ -18,12 +18,13 @@ EXPOSE 443
 ADD entrypoint /entrypoint
 
 #Konfiguration
-RUN useradd -ms /bin/bash ubuntu
-RUN adduser ubuntu sudo
+RUN useradd -ms /bin/bash ubuntu && \
+adduser ubuntu sudo
 
 # Anwendungen
-RUN apt-get update
-RUN apt-get update && apt-get install -y openssh-server git git-crypt ansible zsh tmux dialog apt-utils sudo
+RUN apt-get update && \
+apt-get update && \
+apt-get install -y openssh-server zsh tmux dialog apt-utils sudo
 RUN mkdir /var/run/sshd
 RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/'  /etc/ssh/sshd_config
 RUN sed -i 's/PermitRootLogin PermitRootLogin prohibit-password/PermitRootLogin yes/'  /etc/ssh/sshd_config
@@ -34,7 +35,6 @@ RUN chsh -s $(which zsh); sh -c "$(curl -fsSL https://raw.githubusercontent.com/
 #Specific User stuff
 USER ubuntu
 WORKDIR /home/ubuntu
-RUN echo xfce4-session > /home/ubuntu/.xsession
 RUN chsh -s $(which zsh); sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"; exit 0;
 USER root
 

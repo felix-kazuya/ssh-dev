@@ -1,7 +1,9 @@
 #!/bin/bash
 set -e
 
+echo "changed Root Password to $ROOT_PASSWORD"
 echo "root:$ROOT_PASSWORD" | chpasswd
+echo "changed User Password to $ROOT_PASSWORD"
 echo "ubuntu:$ROOT_PASSWORD" | chpasswd
 
 
